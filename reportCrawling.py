@@ -3,6 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+from mongo_operations import insert_data_into_mongo
+
 # Global DataFrame to store all reports
 df = pd.DataFrame()
 
@@ -145,3 +147,10 @@ def fetch_all_reports(pages=1):
 # Run the function to fetch all reports
 fetch_all_reports(pages=2)
 print(df)
+
+#Convert dataFrame to list of dictionaries
+data_to_save = df.to_dict('records')
+
+#Save to MongoDB
+insert_data_into_mongo(data_to_save)
+print("데이터가 MongoDB에 저장되었습니다!!")
